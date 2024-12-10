@@ -14,6 +14,10 @@ public class FileParser {
 
     // Метод для чтения файла и преобразования JSON в Map
     public static Map<String, Object> getData(String filePath) throws IOException {
+        if (!Files.exists(Paths.get(filePath))) {
+            throw new IOException("File not found: " + filePath);
+        }
+
         String content = new String(Files.readAllBytes(Paths.get(filePath)));
         return parse(content); // Парсинг содержимого
     }
@@ -23,9 +27,9 @@ public class FileParser {
         try {
             return objectMapper.readValue(content, Map.class);
         } catch (JsonParseException e) {
-            throw new IOException("Invalid JSON format", e);
+            throw new IOException("Invalid JSON format in file: " + content, e);
         } catch (JsonMappingException e) {
-            throw new IOException("Error mapping JSON to object", e);
+            throw new IOException("Error mapping JSON to object in file: " + content, e);
         }
     }
 }
