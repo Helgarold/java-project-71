@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("checkstyle")
     id("application")
-    id("com.github.johnrengelman.shadow") version "8.0.0" // Обновите до последней версии
+    id("com.github.johnrengelman.shadow") version "8.1.1" // Обновите до последней версии
     id("jacoco") // Плагин для Jacoco
 }
 
@@ -40,7 +40,7 @@ tasks.test {
 }
 
 jacoco {
-    toolVersion = "0.8.8"
+    toolVersion = "0.8.12"
 }
 
 tasks.jacocoTestReport {
@@ -50,9 +50,6 @@ tasks.jacocoTestReport {
         xml.required.set(true)
         html.required.set(true)
     }
-
-
-    additionalSourceDirs.setFrom(files("src/main/java")) // Убедитесь, что файл и пути настроены правильно
 }
 
 tasks.jacocoTestCoverageVerification { // Отчет о покрытии тестов
