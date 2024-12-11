@@ -2,8 +2,8 @@ plugins {
     id("java")
     id("checkstyle")
     id("application")
-    id("com.github.johnrengelman.shadow") version "8.1.1" // Обновите до последней версии
-    id("jacoco") // Плагин для Jacoco
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("jacoco")
 }
 
 group = "hexlet.code"
@@ -24,17 +24,17 @@ tasks.named<Checkstyle>("checkstyleMain") {
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
+    // Обновите версии библиотек до актуальных
     implementation("info.picocli:picocli:4.6.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")  // Обновите до последней стабильной версии
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
+    testImplementation(platform("org.junit:junit-bom:5.10.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
 }
 
 application {
-    mainClass.set("hexlet.code.App") // Убедитесь, что это основной класс в вашем проекте
+    mainClass.set("hexlet.code.App")
 }
 
-// Задаем параметры для тестов
 tasks.test {
     useJUnitPlatform()
 }
@@ -44,7 +44,7 @@ jacoco {
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test) // Убедитесь, что сначала выполняются тесты
+    dependsOn(tasks.test)
     additionalSourceDirs.setFrom(files("src/main/java"))
     reports {
         xml.required.set(true)
@@ -52,6 +52,6 @@ tasks.jacocoTestReport {
     }
 }
 
-tasks.jacocoTestCoverageVerification { // Отчет о покрытии тестов
-    dependsOn(tasks.jacocoTestReport) // Убедитесь, что отчет создается перед проверкой
+tasks.jacocoTestCoverageVerification {
+    dependsOn(tasks.jacocoTestReport)
 }
