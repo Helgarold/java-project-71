@@ -40,15 +40,17 @@ tasks.test {
 }
 
 jacoco {
-    toolVersion = "0.8.8" // Убедитесь, что используете нужную версию Jacoco
+    toolVersion = "0.8.8"
 }
 
 tasks.jacocoTestReport {
+    dependsOn(tasks.test) // Убедитесь, что сначала выполняются тесты
     additionalSourceDirs.setFrom(files("src/main/java"))
     reports {
         xml.required.set(true)
         html.required.set(true)
     }
+
 
     additionalSourceDirs.setFrom(files("src/main/java")) // Убедитесь, что файл и пути настроены правильно
 }

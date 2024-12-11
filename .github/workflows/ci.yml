@@ -35,7 +35,7 @@ jobs:
         run: make -C app lint  # Запускаем линтинг через Checkstyle
 
       - name: Generate Jacoco report
-        run: make report  # Генерация отчета через Makefile в корне
+        run: make -C app report --stacktrace --info
      
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
