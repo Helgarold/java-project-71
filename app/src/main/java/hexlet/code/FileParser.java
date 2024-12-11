@@ -10,7 +10,7 @@ import java.nio.file.Paths;
 import java.util.Map;
 
 public class FileParser {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     // Метод для чтения файла и преобразования JSON в Map
     public static Map<String, Object> getData(String filePath) throws IOException {
@@ -25,7 +25,7 @@ public class FileParser {
     // Метод для парсинга JSON
     private static Map<String, Object> parse(String content) throws IOException {
         try {
-            return objectMapper.readValue(content, Map.class);
+            return OBJECT_MAPPER.readValue(content, Map.class);
         } catch (JsonParseException e) {
             throw new IOException("Invalid JSON format in file: " + content, e);
         } catch (JsonMappingException e) {
