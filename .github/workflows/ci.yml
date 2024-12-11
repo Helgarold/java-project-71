@@ -32,5 +32,5 @@ jobs:
         run: |
           gem install codeclimate-test-reporter
           codeclimate-test-reporter before-build
-          ./gradlew test
+          ./gradlew test # Если вы используете report, убедитесь, что корректно вызывается
           codeclimate-test-reporter after-build
