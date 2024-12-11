@@ -14,31 +14,33 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up JDK
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'adopt'
+          java-version: '21'
+          distribution: 'temurin'  # Измените 'adopt' на 'temurin'
 
-      - name: Install Make
-        run: sudo apt-get install make
+      - name: Build with Gradle
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: '8.7'  # Убедитесь, что используете нужную версию Gradle
 
-      - name: Build project
-        run: make build
+      - name: Checkstyle
+        run: ./gradlew checkstyleMain  # Выполните проверку стиля кода
 
       - name: Run tests
-        run: make -C app test         # Запускаем тесты через Makefile в директории app
+        run: ./gradlew test  # Запуск тестов через Gradle
 
       - name: Generate report
-        run: make report              # Генерация отчета из корневого Makefile
+        run: ./gradlew jacocoTestReport  # Генерация отчета Jacoco
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: make report  # Убедитесь, что ваша команда для генерации отчета верна
-          coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-          coverage-input-type: jacoco   # Указание типа ввода
+          coverageCommand: ./gradlew jacocoTestReport  # Убедитесь, что команда для генерации отчета верна
+          coverageLocations: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          inputType: jacoco  # Убедитесь, что указано корректное значение типа входных данных
