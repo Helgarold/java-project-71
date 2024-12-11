@@ -3,7 +3,7 @@ plugins {
     id("checkstyle")
     id("application")
     id("com.github.johnrengelman.shadow") version "7.1.0"
-    id("jacoco") // Добавьте плагин Jacoco
+    id("jacoco") // Плагин для Jacoco
 }
 
 group = "hexlet.code"
@@ -34,6 +34,7 @@ application {
     mainClass.set("hexlet.code.App") // Убедитесь, что это основной класс в вашем проекте
 }
 
+// Задаем параметры для тестов
 tasks.test {
     useJUnitPlatform()
 }
@@ -46,7 +47,11 @@ tasks.jacocoTestReport { // Задача для генерации отчета 
     dependsOn(tasks.test) // Запускаем тесты перед генерацией отчета
     finalizedBy(tasks.jacocoTestCoverageVerification) // Используется для проверки покрытия
     reports {
-        xml.required.set(false) // Используйте set(false) вместо required = false
-        html.required.set(true) // не было enabled, используйте set(true) здесь
+        xml.required.set(true) // Убедитесь, что XML отчет создается
+        html.required.set(true) // Убедитесь, что HTML отчет создается
     }
+}
+
+tasks.jacocoTestCoverageVerification { // Отчет о покрытии тестов
+    dependsOn(tasks.jacocoTestReport) // Убедитесь, что отчет создается перед проверкой
 }
