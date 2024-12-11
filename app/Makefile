@@ -50,7 +50,7 @@ lint:
 # Генерация отчета
 report:
 	@echo "Генерация отчета Jacoco..."
-	@./gradlew jacocoTestReport
+	@./gradlew jacocoTestReport --stacktrace --info
 
 # Установка приложения
 install:
