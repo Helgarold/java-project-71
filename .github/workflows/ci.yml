@@ -32,7 +32,7 @@ jobs:
         run: make -C app test         # Запускаем тесты через Makefile в директории app
 
       - name: Generate report
-        run: make report              # Генерация отчета (если необходимо) из корневого Makefile
+        run: make report              # Генерация отчета из корневого Makefile
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
@@ -40,4 +40,5 @@ jobs:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
           coverageCommand: make report  # Убедитесь, что ваша команда для генерации отчета верна
-          coverageLocations: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          coverage-input-type: jacoco   # Указание типа ввода
