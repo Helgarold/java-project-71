@@ -1,5 +1,6 @@
 plugins {
     id("java")
+    id("checkstyle")
     id("application")
     id("com.github.johnrengelman.shadow") version "7.1.0"
 }
@@ -9,6 +10,17 @@ version = "1.0-SNAPSHOT"
 
 repositories {
     mavenCentral()
+}
+
+checkstyle {
+    toolVersion = "8.45"
+    configFile = file("config/checkstyle/checkstyle.xml")
+}
+tasks.checkstyleMain {
+    dependsOn(tasks.compileJava)
+    checkstyle {
+        source = project.fileTree("src/main/java")
+    }
 }
 
 dependencies {
