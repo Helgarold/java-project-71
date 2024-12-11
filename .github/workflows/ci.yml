@@ -17,7 +17,8 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17' # Укажите версию JDK, соответствующую вашему проекту
+          java-version: '17' # укажите версию JDK, соответствующую вашему проекту
+          distribution: 'adopt' # Это может быть 'adopt', 'zulu', 'temurin' и т.д.
 
       - name: Build with Gradle
         run: ./gradlew build # Если вы используете gradlew, иначе используйте gradle build
