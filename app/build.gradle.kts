@@ -2,7 +2,7 @@ plugins {
     id("java")
     id("checkstyle")
     id("application")
-    id("com.github.johnrengelman.shadow") version "7.1.0"
+    id("com.github.johnrengelman.shadow") version "8.0.0" // Обновите до последней версии
     id("jacoco") // Плагин для Jacoco
 }
 
@@ -27,7 +27,7 @@ dependencies {
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     implementation("info.picocli:picocli:4.6.1")
-    implementation("com.fasterxml.jackson.core:jackson-databind:2.13.0")  // Убедитесь, что версия актуальна
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")  // Обновите до последней стабильной версии
 }
 
 application {
@@ -43,13 +43,14 @@ jacoco {
     toolVersion = "0.8.8" // Убедитесь, что используете нужную версию Jacoco
 }
 
-tasks.jacocoTestReport { // Задача для генерации отчета Jacoco
-    dependsOn(tasks.test) // Запускаем тесты перед генерацией отчета
-    finalizedBy(tasks.jacocoTestCoverageVerification) // Используется для проверки покрытия
+tasks.jacocoTestReport {
+    additionalSourceDirs.setFrom(files("src/main/java"))
     reports {
-        xml.required.set(true) // Убедитесь, что XML отчет создается
-        html.required.set(true) // Убедитесь, что HTML отчет создается
+        xml.required.set(true)
+        html.required.set(true)
     }
+
+    additionalSourceDirs.setFrom(files("src/main/java")) // Убедитесь, что файл и пути настроены правильно
 }
 
 tasks.jacocoTestCoverageVerification { // Отчет о покрытии тестов
