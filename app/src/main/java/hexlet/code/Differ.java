@@ -1,11 +1,10 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import static hexlet.code.FileParser.getData;
 
@@ -33,30 +32,49 @@ public class Differ {
                     result.append("\n"); // Добавить пустую строку перед следующей парой
                 }
                 result.append(String.format("  - %s: %s", key, value1)); // Deleted keys
-                isFirstEntry = false; // Установить флаг после первого элемента
+                isFirstEntry = false;
             } else if (value1 == null && value2 != null) {
                 if (!isFirstEntry) {
-                    result.append("\n"); // Добавить пустую строку перед следующей парой
+                    result.append("\n");
                 }
                 result.append(String.format("  + %s: %s", key, value2)); // Added keys
-                isFirstEntry = false; // Установить флаг после первого элемента
+                isFirstEntry = false;
             } else if (value1 != null && value2 != null && !value1.equals(value2)) {
                 if (!isFirstEntry) {
-                    result.append("\n"); // Добавить пустую строку перед следующей парой
+                    result.append("\n");
                 }
                 result.append(String.format("  - %s: %s", key, value1)); // Modified keys
                 result.append(String.format("\n  + %s: %s", key, value2)); // Modified keys
-                isFirstEntry = false; // Установить флаг после первого элемента
+                isFirstEntry = false;
             } else if (value1 != null && value2 != null && value1.equals(value2)) {
                 if (!isFirstEntry) {
-                    result.append("\n"); // Добавить пустую строку перед следующей парой
+                    result.append("\n");
                 }
-                result.append(String.format("%s: %s", key, value1)); // Both values are the same
-                isFirstEntry = false; // Установить флаг после первого элемента
+                result.append(String.format("  %s: %s", key, value1)); // Both values are the same
+                isFirstEntry = false;
             }
         }
 
-        result.append("\n}"); // Закрывающая фигурная скобка с переносом строки перед ней
+        if (!isFirstEntry) {
+            result.append("\n"); // Добавить перенос строки перед закрывающей фигурной скобкой
+        }
+        result.append("}"); // Закрывающая фигурная скобка
         return result.toString();
+    }
+
+    public static boolean compare(String json1, String json2) {
+        Map<String, Object> data1 = getDataFromJsonString(json1);
+        Map<String, Object> data2 = getDataFromJsonString(json2);
+        return data1.equals(data2);
+    }
+
+    private static Map<String, Object> getDataFromJsonString(String jsonString) {
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(jsonString, Map.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
