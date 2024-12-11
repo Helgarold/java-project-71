@@ -26,13 +26,13 @@ jobs:
         run: sudo apt-get install make
 
       - name: Build project
-        run: make build    # Используем Makefile для сборки проекта
+        run: make build    # Используем Makefile в корневой директории для сборки проекта
 
       - name: Run tests
-        run: make test     # Используем Makefile для запуска тестов
+        run: make -C app test     # Используем Makefile в директории app для запуска тестов
 
       - name: Generate report
-        run: make report   # Генерация отчета (если необходимо)
+        run: make report   # Генерация отчета (если необходимо) из корневого Makefile
 
       - name: Code Climate Test Reporter
         env:
@@ -40,5 +40,5 @@ jobs:
         run: |
           gem install codeclimate-test-reporter
           codeclimate-test-reporter before-build
-          make test         # Запускаем тесты через Makefile
+          make -C app test         # Запускаем тесты через Makefile в директории app
           codeclimate-test-reporter after-build
