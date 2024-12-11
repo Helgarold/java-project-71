@@ -15,32 +15,33 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
+        
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           java-version: '21'
-          distribution: 'temurin'  # Измените 'adopt' на 'temurin'
-
-      - name: Build with Gradle
-        uses: gradle/gradle-build-action@v3
-        with:
-          gradle-version: '8.7'  # Убедитесь, что используете нужную версию Gradle
-
-      - name: Checkstyle
-        run: ./gradlew checkstyleMain  # Выполните проверку стиля кода
+          distribution: 'temurin'
+      
+      - name: Install Make
+        run: sudo apt-get install -y make
+        
+      - name: Build project
+        run: make build  # Запускаем сборку через Makefile в корневой директории
 
       - name: Run tests
-        run: ./gradlew test  # Запуск тестов через Gradle
+        run: make -C app test  # Запускаем тесты из директории app
 
-      - name: Generate report
-        run: ./gradlew jacocoTestReport  # Генерация отчета Jacoco
+      - name: Run Checkstyle
+        run: make -C app lint  # Запускаем линтинг через Checkstyle
 
+      - name: Generate Jacoco report
+        run: make report  # Генерация отчета через Makefile в корне
+     
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         with:
-          coverageCommand: ./gradlew jacocoTestReport  # Убедитесь, что команда для генерации отчета верна
-          coverageLocations: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-          inputType: jacoco  # Убедитесь, что указано корректное значение типа входных данных
+          coverageCommand: make report  # Проверка на корректность команды
+          coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          inputType: jacoco
