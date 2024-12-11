@@ -28,11 +28,17 @@ jobs:
           java-version: '17' # Укажите версию JDK, соответствующую вашему проекту
           distribution: 'adopt' # Это может быть 'adopt', 'zulu', 'temurin' и т.д.
 
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Install Make
+        run: sudo apt-get install make
+
+      - name: Build project
+        run: make build    # Используем Makefile для сборки проекта
 
       - name: Run tests
-        run: ./gradlew test
+        run: make test     # Используем Makefile для запуска тестов
+
+      - name: Generate report
+        run: make report   # Генерация отчета (если необходимо)
 
       - name: Code Climate Test Reporter
         env:
@@ -40,5 +46,5 @@ jobs:
         run: |
           gem install codeclimate-test-reporter
           codeclimate-test-reporter before-build
-          ./gradlew test # Если вы используете report, убедитесь, что корректно вызывается
+          make test         # Запускаем тесты через Makefile
           codeclimate-test-reporter after-build
