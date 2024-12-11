@@ -3,12 +3,12 @@
 
 # Сборка проекта
 build:
-    make -C app build
+	make -C app build
 
 # Генерация отчета
 report:
-    make -C app report
+	make -C app report
 
 # Очистка проекта
 clean:
-    make -C app clean
+	make -C app clean
