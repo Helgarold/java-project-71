@@ -19,26 +19,25 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17' # Укажите версию JDK, соответствующую вашему проекту
-          distribution: 'adopt' # Это может быть 'adopt', 'zulu', 'temurin' и т.д.
+          java-version: '17'
+          distribution: 'adopt'
 
       - name: Install Make
         run: sudo apt-get install make
 
       - name: Build project
-        run: make build    # Используем Makefile в корневой директории для сборки проекта
+        run: make build
 
       - name: Run tests
-        run: make -C app test     # Используем Makefile в директории app для запуска тестов
+        run: make -C app test         # Запускаем тесты через Makefile в директории app
 
       - name: Generate report
-        run: make report   # Генерация отчета (если необходимо) из корневого Makefile
+        run: make report              # Генерация отчета (если необходимо) из корневого Makefile
 
-      - name: Code Climate Test Reporter
+      - name: Publish code coverage
+        uses: paambaati/codeclimate-action@v9.0.0
         env:
           CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        run: |
-          gem install codeclimate-test-reporter
-          codeclimate-test-reporter before-build
-          make -C app test         # Запускаем тесты через Makefile в директории app
-          codeclimate-test-reporter after-build
+        with:
+          coverageCommand: make report  # Убедитесь, что ваша команда для генерации отчета верна
+          coverageLocations: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
