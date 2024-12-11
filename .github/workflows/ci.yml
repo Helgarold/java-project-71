@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
+    branches: [ main ]
 
 jobs:
   build:
@@ -14,20 +14,22 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up JDK 11
-        uses: actions/setup-java@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v2
         with:
-          java-version: '11'
+          java-version: '17' # Укажите версию JDK, соответствующую вашему проекту
 
       - name: Build with Gradle
-        run: ./gradlew build checkstyleMain checkstyleTest
+        run: ./gradlew build # Если вы используете gradlew, иначе используйте gradle build
 
-      - name: Upload coverage to CodeClimate
+      - name: Run tests
+        run: ./gradlew test # Запуск тестов
+
+      - name: Code Climate Test Reporter
         env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_REPO_TOKEN }}
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
         run: |
-          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 -o cc-test-reporter
-          chmod +x cc-test-reporter
-          ./cc-test-reporter before-build
-          ./gradlew jacocoTestReport
-          ./cc-test-reporter upload coverage/jacoco/test.exec
+          gem install codeclimate-test-reporter
+          codeclimate-test-reporter before-build
+          ./gradlew test
+          codeclimate-test-reporter after-build
