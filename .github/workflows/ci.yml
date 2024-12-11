@@ -1,42 +1,44 @@
 name: CI
 
-  on:
-     push:
-       branches: [ main ]
-     pull_request:
-       branches: [ main ]
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-   jobs:
-     build:
-       runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-       steps:
-         - name: Checkout code
-           uses: actions/checkout@v2
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-         - name: List files in current directory
-           run: ls -la
+      - name: List files in current directory
+        run: ls -la
 
-         - name: Make gradlew executable
-           run: chmod +x ./gradlew
+      - name: Make gradlew executable
+        run: chmod +x ./gradlew
 
-         - name: Set up JDK
-           uses: actions/setup-java@v2
-           with:
-             java-version: '17' # Укажите версию JDK, соответствующую вашему проекту
-             distribution: 'adopt' # Это может быть 'adopt', 'zulu', 'temurin' и т.д.
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17' # Укажите версию JDK, соответствующую вашему проекту
+          distribution: 'adopt' # Это может быть 'adopt', 'zulu', 'temurin' и т.д.
 
-         - name: Build with Gradle
-           run: ./gradlew build
+      - name: Build with Gradle
+        run: ./gradlew build
 
-         - name: Run tests
-           run: ./gradlew test
+      - name: Run tests
+        run: ./gradlew test
 
-         - name: Code Climate Test Reporter
-           env:
-             CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-           run: |
-             gem install codeclimate-test-reporter
-             codeclimate-test-reporter before-build
-             ./gradlew test # Если вы используете report, убедитесь, что корректно вызывается
-             codeclimate-test-reporter after-build
+      - name: Code Climate Test Reporter
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        run: |
+          gem install codeclimate-test-reporter
+          codeclimate-test-reporter before-build
+          ./gradlew test # Если вы используете report, убедитесь, что корректно вызывается
+          codeclimate-test-reporter after-build
