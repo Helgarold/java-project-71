@@ -16,25 +16,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: List files
+        run: ls -la  # Вывод содержимого каталога для отладки
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
 
-      - name: Give execute permission
-        run: chmod +x ./gradlew  # Добавляем права на выполнение
+      - name: Setup Makefile
+        run: make setup  # Настройка Gradle Wrapper
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v3
-        with:
-          gradle-version: 8.7
+      - name: Build
+        run: make build  # Сборка проекта
 
-      - name: Run Checkstyle
-        run: ./gradlew checkstyleMain  # Запускаем Checkstyle
+      - name: Run lint
+        run: make lint  # Запуск линтинга
 
       - name: Run tests
-        run: ./gradlew test  # Запускаем тесты
+        run: make test  # Запуск тестов
+
+      - name: Generate coverage report
+        run: make report  # Генерация отчета Jacoco
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
@@ -44,4 +48,3 @@ jobs:
         with:
           coverageCommand: make report
           coverageLocations: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-

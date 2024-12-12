@@ -1,5 +1,3 @@
-.SILENT:  # Для скрытия команд
-
 # Переменные
 APP_DIR = ./build/install/app/bin
 APP_NAME = app
