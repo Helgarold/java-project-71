@@ -1,5 +1,7 @@
 name: CI
 
+name: Java CI
+
 on:
   push:
     branches:
@@ -15,33 +17,30 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-        
+
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
+          java-version: '21'
           distribution: 'temurin'
-      
-      - name: Install Make
-        run: sudo apt-get install -y make
-        
-      - name: Build project
-        run: make build  # Запускаем сборку через Makefile в корневой директории
 
-      - name: Run tests
-        run: make -C app test  # Запускаем тесты из директории app
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v3
+        with:
+          gradle-version: 8.7
 
       - name: Run Checkstyle
-        run: make -C app lint  # Запускаем линтинг через Checkstyle
+        run: ./gradlew checkstyleMain  # Запускаем Checkstyle
 
-      - name: Generate Jacoco report
-        run: make -C app report
-     
-      - name: Publish code coverage
-        uses: paambaati/codeclimate-action@v9.0.0
-        env:
-          CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
-        with:
-          coverageCommand: make report  # Проверка на корректность команды
-          coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
-          inputType: jacoco
+      - name: Run tests
+        run: ./gradlew test  # Запускаем тесты
+
+       # Uncomment this section if you need to publish code coverage
+       - name: Publish code coverage
+          uses: paambaati/codeclimate-action@v9.0.0
+           env:
+            CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
+            JACOCO_SOURCE_PATH: ${{github.workspace}}/src/main/java
+         with:
+            coverageCommand: make report
+            coverageLocations: ${{github.workspace}}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
