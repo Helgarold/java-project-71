@@ -7,7 +7,6 @@ on:
   pull_request:
     branches:
       - main
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -17,7 +16,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: List files
-        run: ls -la  # Вывод содержимого каталога для отладки
+        run: ls -la # Вывод содержимого каталога для отладки
 
       - name: Set up JDK
         uses: actions/setup-java@v4
@@ -26,19 +25,22 @@ jobs:
           distribution: 'temurin'
 
       - name: Setup Makefile
-        run: make setup  # Настройка Gradle Wrapper
+        run: make setup # Настройка Gradle Wrapper
 
       - name: Build
-        run: make build  # Сборка проекта
+        run: make build # Сборка проекта
 
       - name: Run lint
-        run: make lint  # Запуск линтинга
+        run: make lint # Запуск линтинга
 
       - name: Run tests
-        run: make test  # Запуск тестов
+        run: make test # Запуск тестов
 
       - name: Generate coverage report
-        run: make report  # Генерация отчета Jacoco
+        run: make report # Генерация отчета Jacoco
+
+      - name: List coverage reports
+        run: ls -la ${{ github.workspace }}/app/build/reports/jacoco/test/ # Добавляем вывод каталога с отчетом Jacoco
 
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
@@ -47,4 +49,6 @@ jobs:
           JACOCO_SOURCE_PATH: ${{ github.workspace }}/src/main/java
         with:
           coverageCommand: make report
-          coverageLocations: ${{ github.workspace }}/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+          coverageInputType: jacoco
+          debug: true # Включаем режим отладки
