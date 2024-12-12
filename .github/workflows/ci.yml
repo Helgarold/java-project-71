@@ -53,3 +53,4 @@ jobs:
            coverageLocations: app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
            debug: true
            prefix: app/src/main/java  # Здесь нужно указать правильный префикс
+
