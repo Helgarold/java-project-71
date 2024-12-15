@@ -36,6 +36,11 @@ public class App implements Runnable {
             description = "Print version information and exit.")
     private boolean version;
 
+    @Option(names = {"--type"},
+            description = "type of files to compare (json or yaml)",
+            paramLabel = "type")
+    private String type;
+
     public static void main(String[] args) {
         CommandLine.run(new App(), args);
     }
@@ -53,7 +58,17 @@ public class App implements Runnable {
         }
 
         try {
-            String diff = Differ.generate(filepath1, filepath2);
+            String diff;
+
+            // Определяем тип файла
+            if ("json".equalsIgnoreCase(type)) {
+                diff = Differ.generate(filepath1, filepath2);
+            } else if ("yaml".equalsIgnoreCase(type) || "yml".equalsIgnoreCase(type)) {
+                diff = YmlDiffer.generate(filepath1, filepath2);
+            } else {
+                throw new IllegalArgumentException("Unsupported file type: " + type);
+            }
+
             System.out.println(diff);
         } catch (IOException e) {
             System.err.println("Error reading files: " + e.getMessage());
