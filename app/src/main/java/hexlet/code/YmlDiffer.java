@@ -11,6 +11,11 @@ public class YmlDiffer {
         Map<String, Object> data1 = Parser.getData(filePath1);
         Map<String, Object> data2 = Parser.getData(filePath2);
 
+        // Проверка на одинаковые данные
+        if (data1.equals(data2)) {
+            return "{}";  // Если данные идентичны, возвращаем пустой объект
+        }
+
         Set<String> allKeys = new TreeSet<>();
         allKeys.addAll(data1.keySet());
         allKeys.addAll(data2.keySet());
@@ -57,11 +62,5 @@ public class YmlDiffer {
         }
         result.append("}"); // Закрывающая фигурная скобка
         return result.toString();
-    }
-
-    public static boolean compare(String yml1, String yml2) {
-        Map<String, Object> data1 = Parser.getDataFromString(yml1);
-        Map<String, Object> data2 = Parser.getDataFromString(yml2);
-        return data1.equals(data2);
     }
 }
