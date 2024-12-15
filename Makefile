@@ -1,5 +1,5 @@
 # Цели
-.PHONY: build report clean
+.PHONY: build report clean run run-h run-json run-yml setup test lint
 
 # Сборка проекта
 build:
@@ -14,12 +14,16 @@ clean:
 	make -C app clean
 
 # Запуск приложения с двумя JSON файлами
-run:
-	make -C app run
+run-json:
+	make -C app run-json
+
+# Запуск приложения с двумя YAML файлами
+run-yml:
+	make -C app run-yml
 
 # Запуск приложения с флагом -h
-run-dist:
-	make -C app run-dist
+run-h:
+	make -C app run-h
 
 # Установка Gradle Wrapper
 setup:
@@ -32,5 +36,3 @@ test:
 # Линтинг
 lint:
 	make -C app lint
-
-
