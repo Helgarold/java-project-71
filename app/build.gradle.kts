@@ -24,9 +24,13 @@ tasks.named<Checkstyle>("checkstyleMain") {
 }
 
 dependencies {
-    // Обновите версии библиотек до актуальных
     implementation("info.picocli:picocli:4.6.1")
     implementation("com.fasterxml.jackson.core:jackson-databind:2.14.2")
+    implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.14.2") // Для работы с YAML
+
+    // Добавление библиотеки SnakeYAML, если требуется
+    implementation("org.yaml:snakeyaml:1.29")
+
     testImplementation(platform("org.junit:junit-bom:5.10.1"))
     testImplementation("org.junit.jupiter:junit-jupiter")
 }
