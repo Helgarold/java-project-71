@@ -49,10 +49,9 @@ jacoco {
 
 tasks.jacocoTestReport {
     dependsOn(tasks.test)
-    additionalSourceDirs.setFrom(files("src/main/java"))
     reports {
         xml.required.set(true)
-        html.required.set(true)
+        xml.outputLocation.set(file("${layout.buildDirectory}/reports/jacoco/test/jacocoTestReport.xml"))
     }
 }
 
