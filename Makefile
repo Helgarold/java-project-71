@@ -5,6 +5,10 @@
 build:
 	make -C app build
 
+# Установка проекта
+install:
+	make -C app install
+
 # Генерация отчета
 report:
 	make -C app report
