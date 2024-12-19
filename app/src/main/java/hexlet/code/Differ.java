@@ -6,7 +6,7 @@ import java.util.Set;
 import java.util.TreeSet;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import static hexlet.code.FileParser.getData;
+import static hexlet.code.Parser.getData;
 
 public class Differ {
 
