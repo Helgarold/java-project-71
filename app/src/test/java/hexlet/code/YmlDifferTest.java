@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.fail;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 public class YmlDifferTest {
 
@@ -18,8 +19,8 @@ public class YmlDifferTest {
         assertTrue(new File(filePath2).exists(), "file2.yml does not exist");
 
         try {
-            String result = YmlDiffer.generate(filePath1, filePath2);
-            // Ожидаем, что результат будет не пустым, так как файлы разные
+            List<DiffNode> result = YmlDiffer.generate(filePath1, filePath2);
+            // Ожидаем, что результат будет не пустым, так как файлы одинаковые
             assertFalse(result.isEmpty());
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,7 +37,7 @@ public class YmlDifferTest {
         assertTrue(new File(filePath2).exists(), "file2.yml does not exist");
 
         try {
-            String result = YmlDiffer.generate(filePath1, filePath2);
+            List<DiffNode> result = YmlDiffer.generate(filePath1, filePath2);
             // Логируем результат для отладки
             System.out.println("Result of comparing different values: " + result);
             assertFalse(result.isEmpty());
@@ -55,7 +56,7 @@ public class YmlDifferTest {
         assertTrue(new File(filePath2).exists(), "file2.yml does not exist");
 
         try {
-            String result = YmlDiffer.generate(filePath1, filePath2);
+            List<DiffNode> result = YmlDiffer.generate(filePath1, filePath2);
             // Ожидаем, что результат будет не пустым, так как есть различия в ключах
             assertFalse(result.isEmpty());
         } catch (IOException e) {
