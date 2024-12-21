@@ -57,4 +57,4 @@
 
 ## Пример работы программы
 Вот пример работы программы в виде анимации:
-[![asciicast](https://asciinema.org/a/01zXHfixrCq1nYwD2rZhR9BSR.svg)](https://asciinema.org/a/01zXHfixrCq1nYwD2rZhR9BSR)
+[![asciicast](https://asciinema.org/a/dwsggeEJw0j64yeztnscSaKbq)](https://asciinema.org/a/dwsggeEJw0j64yeztnscSaKbq)
