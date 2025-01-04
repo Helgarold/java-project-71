@@ -13,6 +13,19 @@ public class YmlDiffer {
         Map<String, Object> data1 = Parser.getData(filePath1);
         Map<String, Object> data2 = Parser.getData(filePath2);
 
+        return compareData(data1, data2);
+    }
+
+    public static List<DiffNode> generate(String filePath1, String filePath2, String formatName) throws IOException {
+        Map<String, Object> data1 = Parser.getData(filePath1);
+        Map<String, Object> data2 = Parser.getData(filePath2);
+
+        List<DiffNode> diffNodes = compareData(data1, data2);
+
+        return diffNodes; // В будущем, если добавите форматирование, возвращайте отформатированный результат
+    }
+
+    private static List<DiffNode> compareData(Map<String, Object> data1, Map<String, Object> data2) {
         Set<String> allKeys = new TreeSet<>();
         allKeys.addAll(data1.keySet());
         allKeys.addAll(data2.keySet());
