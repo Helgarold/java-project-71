@@ -7,6 +7,6 @@
 
 
 
-Пример работы программы
-Вот пример работы программы в виде анимации:
+Пример работы программы:
+
 [![asciicast](https://asciinema.org/a/u5i1shKlhbkDz9fKnUKqjIC5c.svg)](https://asciinema.org/a/u5i1shKlhbkDz9fKnUKqjIC5c)
