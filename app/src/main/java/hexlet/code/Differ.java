@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import hexlet.code.formatters.Formatter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,7 +35,6 @@ public class Differ {
             } else if (!value1.equals(value2)) {
                 if (value1 instanceof List || value1 instanceof Map
                         || value2 instanceof List || value2 instanceof Map) {
-                    // Можно вызвать генерацию для глубокого сравнения
                     diffNodes.add(new DiffNode(key, "changed", value1, value2));
                 } else {
                     diffNodes.add(new DiffNode(key, "changed", value1, value2));
@@ -50,6 +50,13 @@ public class Differ {
     private static Map<String, Object> getData(String filePath) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(new File(filePath), Map.class);
+    }
+
+    // Новый метод для генерации с форматированием
+    public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
+        List<DiffNode> diffNodes = generate(filePath1, filePath2);
+        Formatter formatter = Formatter.getFormatter(formatName);
+        return formatter.format(diffNodes); // Теперь правильно используется метод форматирования
     }
 
     public static boolean compare(String json1, String json2) {
