@@ -11,7 +11,7 @@ FILEPATH1_JSON = $(RESOURCES_DIR)/filepath1.json
 FILEPATH2_JSON = $(RESOURCES_DIR)/filepath2.json
 
 # Цели
-.PHONY: all run-json run-yml run-h clean setup build test lint report install check-updates coverage compare-json
+.PHONY: all run-json run-yml run-h clean setup build test lint report install check-updates coverage compare-json run-plain
 
 # Основная цель
 all: run-json
@@ -26,10 +26,10 @@ run-yml:
 	@echo "Запуск приложения с файлами ${FILE1_YAML} и ${FILE2_YAML}..."
 	@${APP_DIR}/$(APP_NAME) --type yaml ${FILE1_YAML} ${FILE2_YAML}
 
-# Запуск приложения с двумя JSON файлами проверки вложенных структур
-compare:
-	@echo "Сравнение вложенных структур в файлах ${FILEPATH1_JSON} и ${FILEPATH2_JSON}..."
-	@${APP_DIR}/$(APP_NAME) --type json ${FILEPATH1_JSON} ${FILEPATH2_JSON}
+# Запуск приложения с форматом plain
+run-plain:
+	@echo "Запуск приложения с файлами ./src/main/resources/filepath1.json и ./src/main/resources/filepath2.json в формате plain..."
+	@${APP_DIR}/$(APP_NAME) --type json -f plain ./src/main/resources/filepath1.json ./src/main/resources/filepath2.json
 
 # Запуск приложения с помощью флага -h для вывода справки
 run-h:
