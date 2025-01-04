@@ -31,14 +31,30 @@ public class DiffNode {
         return newValue;
     }
 
+    public String getFormattedValues() {
+        if (type.equals("added")) {
+            return String.format("Value: %s", newValue);
+        } else if (type.equals("removed")) {
+            return String.format("Value: %s", oldValue);
+        } else if (type.equals("updated")) {
+            return String.format("From: %s to: %s", oldValue, newValue);
+        }
+        return "No change";
+    }
+
     @Override
     public String toString() {
         return "DiffNode{"
-                + "key='" + key + '\''
-                + ", type='" + type + '\''
-                + ", oldValue=" + oldValue
-                + ", newValue=" + newValue
-                + '}';
+                +
+                "key='" + key + '\''
+                +
+                ", type='" + type + '\''
+                +
+                ", oldValue=" + oldValue
+                +
+                ", newValue=" + newValue
+                +
+                '}';
     }
 
     @Override
@@ -51,9 +67,12 @@ public class DiffNode {
         }
         DiffNode diffNode = (DiffNode) o;
         return key.equals(diffNode.key)
-                && type.equals(diffNode.type)
-                && Objects.equals(oldValue, diffNode.oldValue)
-                && Objects.equals(newValue, diffNode.newValue);
+                &&
+                type.equals(diffNode.type)
+                &&
+                Objects.equals(oldValue, diffNode.oldValue)
+                &&
+                Objects.equals(newValue, diffNode.newValue);
     }
 
     @Override
