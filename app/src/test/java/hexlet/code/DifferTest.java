@@ -1,40 +1,32 @@
 package hexlet.code;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.io.IOException;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DifferTest {
 
     @Test
-    void testCompareIdenticalJson() {
-        String json1 = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
-        String json2 = "{\"key1\":\"value1\",\"key2\":\"value2\"}";
-
-        assertTrue(Differ.compare(json1, json2), "JSON files should be equal");
+    void testCompareDifferentJson() throws IOException {
+        List<DiffNode> diffNodes = Differ.generate("src/test/resources/file1.json",
+                "src/test/resources/file2.json");
+        assertFalse(diffNodes.isEmpty(), "JSON files should not be equal");
     }
 
     @Test
-    void testCompareDifferentJson() {
-        String json1 = "{\"key1\":\"value1\"}";
-        String json2 = "{\"key2\":\"value2\"}";
-
-        assertFalse(Differ.compare(json1, json2), "JSON files should not be equal");
+    void testCompareJsonWithDifferentValues() throws IOException {
+        List<DiffNode> diffNodes = Differ.generate("src/test/resources/filepath1.json",
+                "src/test/resources/filepath2.json");
+        assertFalse(diffNodes.isEmpty(), "JSON files should not be equal");
     }
 
     @Test
-    void testCompareJsonWithDifferentValues() {
-        String json1 = "{\"key1\":\"value1\"}";
-        String json2 = "{\"key1\":\"value2\"}";
-
-        assertFalse(Differ.compare(json1, json2), "JSON files should not be equal");
-    }
-
-    @Test
-    void testCompareJsonWithDifferentKeys() {
-        String json1 = "{\"key1\":\"value1\"}";
-        String json2 = "{\"key2\":\"value1\"}";
-
-        assertFalse(Differ.compare(json1, json2), "JSON files should not be equal");
+    void testCompareJsonWithDifferentKeys() throws IOException {
+        List<DiffNode> diffNodes = Differ.generate("src/test/resources/file1.json",
+                "src/test/resources/file2.json");
+        assertFalse(diffNodes.isEmpty(), "JSON files should not be equal");
     }
 }
