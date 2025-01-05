@@ -1,9 +1,12 @@
 package hexlet.code;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.yaml.snakeyaml.Yaml;
 import hexlet.code.formatters.Formatter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -48,8 +51,17 @@ public class Differ {
     }
 
     private static Map<String, Object> getData(String filePath) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(filePath), Map.class);
+        if (filePath.endsWith(".json")) {
+            ObjectMapper objectMapper = new ObjectMapper();
+            return objectMapper.readValue(new File(filePath), Map.class);
+        } else if (filePath.endsWith(".yml") || filePath.endsWith(".yaml")) {
+            Yaml yaml = new Yaml();
+            try (InputStream inputStream = new FileInputStream(new File(filePath))) {
+                return yaml.load(inputStream);
+            }
+        } else {
+            throw new IllegalArgumentException("Unsupported file format: " + filePath);
+        }
     }
 
     // Новый метод для генерации с форматированием

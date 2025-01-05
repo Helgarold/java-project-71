@@ -10,6 +10,8 @@ public abstract class Formatter {
                 return new PlainFormatter();
             case "stylish":
                 return new StylishFormatter();
+            case "json": // Добавляем поддержку JSON формата
+                return new JsonFormatter();
             default:
                 throw new IllegalArgumentException("Unknown format: " + format);
         }

@@ -1,5 +1,6 @@
 package hexlet.code;
 
+import hexlet.code.formatters.Formatter;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
@@ -10,8 +11,10 @@ import java.util.List;
 @Command(name = "gendiff", description = "Compares two configuration files and shows a difference.")
 public class App implements Runnable {
 
-    @Option(names = {"-f", "--format"}, description = "output format [default: stylish]",
-            paramLabel = "format", defaultValue = "stylish")
+    @Option(names = {"-f", "--format"},
+            description = "output format [default: stylish]",
+            paramLabel = "format",
+            defaultValue = "stylish")
     private String format;
 
     @Parameters(index = "0", description = "path to first file", paramLabel = "filepath1")
@@ -58,21 +61,12 @@ public class App implements Runnable {
         }
 
         try {
-            String output = ""; // Инициализация переменной
+            // Получаем список различий
+            List<DiffNode> diffNodes = Differ.generate(filepath1, filepath2);
 
-            if ("json".equalsIgnoreCase(type)) {
-                // Получаем форматированные различия
-                output = Differ.generate(filepath1, filepath2, format); // Убираем повторное объявление переменной
-                System.out.println(output);
-            } else if ("yaml".equalsIgnoreCase(type) || "yml".equalsIgnoreCase(type)) {
-                // Получаем список различий
-                List<DiffNode> diffNodes = Differ.generate(filepath1, filepath2);
-                // Форматируем список для вывода
-                output = formatDiffNodes(diffNodes);
-                System.out.println(output);
-            } else {
-                throw new IllegalArgumentException("Unsupported file type: " + type + ". Use 'json' or 'yaml'.");
-            }
+            // Получаем форматированный вывод
+            String output = Formatter.getFormatter(format).format(diffNodes);
+            System.out.println(output);
 
         } catch (IOException e) {
             System.err.println("Error reading files: " + e.getMessage());
@@ -83,13 +77,5 @@ public class App implements Runnable {
             System.err.println("An unexpected error occurred: " + e.getMessage());
             e.printStackTrace(); // Дополнительная отладочная информация
         }
-    }
-
-    private String formatDiffNodes(List<DiffNode> diffNodes) {
-        StringBuilder sb = new StringBuilder();
-        for (DiffNode node : diffNodes) {
-            sb.append(node.toString()).append("\n");
-        }
-        return sb.toString();
     }
 }
