@@ -20,7 +20,7 @@ checkstyle {
 
 tasks.named<Checkstyle>("checkstyleMain") {
     dependsOn(tasks.compileJava)
-    source = project.fileTree("src/main/java")
+    setSource(project.fileTree("src/main/java")) // Исправление устаревшего метода
 }
 
 dependencies {

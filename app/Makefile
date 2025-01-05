@@ -9,7 +9,7 @@ FILE1_YAML = $(RESOURCES_DIR)/file1.yml       # Путь к первому YAML 
 FILE2_YAML = $(RESOURCES_DIR)/file2.yml       # Путь ко второму YAML файлу
 FILEPATH1_JSON = $(RESOURCES_DIR)/filepath1.json
 FILEPATH2_JSON = $(RESOURCES_DIR)/filepath2.json
-format = stylish  # Установите формат вывода по умолчанию
+FORMAT = stylish  # Установите формат вывода по умолчанию
 
 # Цели
 .PHONY: all run-json run-yml run-plain run-h clean setup build test lint report install check-updates coverage
@@ -20,8 +20,8 @@ all: run-json
 # Запуск приложения с двумя JSON файлами
 run-json:
 	@echo "Запуск приложения с файлами ${FILE1_JSON} и ${FILE2_JSON}..."
-	@echo "Формат: $(format)"
-	@${APP_DIR}/$(APP_NAME) --type json -f $(format) ${FILE1_JSON} ${FILE2_JSON}
+	@echo "Формат: $(FORMAT)"
+	@${APP_DIR}/$(APP_NAME) --type json -f $(FORMAT) ${FILE1_JSON} ${FILE2_JSON}
 
 # Запуск приложения с двумя YAML файлами
 run-yml:
@@ -78,7 +78,7 @@ check-updates:
 	@echo "Проверка обновлений зависимостей..."
 	@./gradlew dependencyUpdates
 
-# Test Coverage
+# Тест покрытия
 coverage:
-	@echo "Тест покрытия"
+	@echo "Проверка покрытия тестов..."
 	@./gradlew jacocoTestCoverageVerification
