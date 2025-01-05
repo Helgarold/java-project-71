@@ -6,7 +6,7 @@ build:
 	make -C app build
 
 # Установка проекта
-installDist:
+install:
 	make -C app installDist
 
 # Генерация отчета

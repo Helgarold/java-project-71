@@ -46,7 +46,7 @@ clean:
 # Установка Gradle Wrapper
 setup:
 	@echo "Настройка Gradle Wrapper..."
-	@gradle wrapper --gradle-version 8.8
+	@./gradlew wrapper --gradle-version 8.8
 
 # Сборка проекта
 build:
@@ -69,7 +69,7 @@ report:
 	@./gradlew jacocoTestReport
 
 # Установка приложения
-installDist:
+install:
 	@echo "Установка приложения..."
 	@./gradlew installDist
 

@@ -32,7 +32,7 @@ jobs:
         run: make build # Сборка проекта
 
       - name: Install
-        run: make installDist
+        run: make install # Установка приложения
 
       - name: Run lint
         run: make lint # Запуск линтинга
@@ -50,5 +50,5 @@ jobs:
            JACOCO_SOURCE_PATH: app/src/main/java
         with:
            coverageCommand: make report
-           coverageLocations: ${{github.workspace}}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+           coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
            debug: true
