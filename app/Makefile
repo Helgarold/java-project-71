@@ -69,7 +69,7 @@ report:
 	@./gradlew jacocoTestReport
 
 # Установка приложения
-install:
+installDist:
 	@echo "Установка приложения..."
 	@./gradlew installDist
 
