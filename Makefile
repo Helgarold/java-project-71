@@ -7,7 +7,7 @@ build:
 
 # Установка проекта
 install:
-	make -C app installDist
+	make -C app install
 
 # Генерация отчета
 report:
