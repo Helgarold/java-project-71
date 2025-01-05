@@ -32,7 +32,7 @@ jobs:
         run: make build # Сборка проекта
 
       - name: Install
-        run: make install
+        run: make installDist
 
       - name: Run lint
         run: make lint # Запуск линтинга
