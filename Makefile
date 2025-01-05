@@ -6,8 +6,8 @@ build:
 	make -C app build
 
 # Установка проекта
-install:
-	make -C app install
+installDist:
+	make -C app installDist
 
 # Генерация отчета
 report:
@@ -29,6 +29,9 @@ run-yml:
 run-h:
 	make -C app run-h
 
+# Запуск приложения сравнения plain
+run-plain:
+	make -C app run-plain
 # Установка Gradle Wrapper
 setup:
 	make -C app setup
