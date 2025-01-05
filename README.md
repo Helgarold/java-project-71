@@ -34,6 +34,6 @@
 ## JsonFormatter
 Класс `JsonFormatter` является наследником класса `Formatter` и предназначен для форматирования данных в виде JSON. Он обеспечивает простой и эффективный способ преобразования данных в формат JSON, что может быть полезно для передачи или хранения структурированных данных в приложении.
 
-Пример работы программы:
+#Пример работы программы:
 
 [![asciicast](https://asciinema.org/a/zXKzpZ7pEMyKZqwmT7Wp2garQ.svg)](https://asciinema.org/a/zXKzpZ7pEMyKZqwmT7Wp2garQ)
