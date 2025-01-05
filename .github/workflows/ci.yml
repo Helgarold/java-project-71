@@ -43,6 +43,9 @@ jobs:
       - name: Generate coverage report
         run: make report # Генерация отчета Jacoco
 
+      - name: List coverage report directory
+        run: ls -la ${{ github.workspace }}/app/build/reports/jacoco/test/ # Список файлов для отладки
+
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v9.0.0
         env:
@@ -51,4 +54,5 @@ jobs:
         with:
            coverageCommand: make report
            coverageLocations: ${{ github.workspace }}/app/build/reports/jacoco/test/jacocoTestReport.xml:jacoco
+           coverageInputType: jacoco
            debug: true
