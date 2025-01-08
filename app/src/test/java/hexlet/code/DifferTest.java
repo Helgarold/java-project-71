@@ -57,6 +57,7 @@ public class DifferTest {
     @Test
     public void testGenerateWithYAMLFiles() throws IOException {
         List<DiffNode> diffs = Differ.generate("src/main/resources/file1.yml", "src/main/resources/file2.yml");
-        assertTrue(diffs.stream().anyMatch(diff -> diff.getType().equals("added")), "Должен быть добавленный ключ в YAML");
+        assertTrue(diffs.stream().anyMatch(diff -> diff.getType().equals("added")),
+                "Должен быть добавленный ключ в YAML");
     }
 }
