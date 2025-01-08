@@ -17,10 +17,10 @@ checkstyle {
     configFile = file("config/checkstyle/checkstyle.xml")
 }
 
-tasks.named<Checkstyle>("checkstyleMain") {
+    /*tasks.named<Checkstyle>("checkstyleMain") {
     dependsOn(tasks.compileJava)
     setSource(project.fileTree("src/main/java"))
-}
+}*/
 
 dependencies {
     implementation("info.picocli:picocli:4.6.1")
