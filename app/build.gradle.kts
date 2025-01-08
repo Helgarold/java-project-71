@@ -2,7 +2,6 @@ plugins {
     id("java")
     id("checkstyle")
     id("application")
-    id("com.github.johnrengelman.shadow") version "8.1.1"
     id("jacoco")
 }
 
@@ -20,7 +19,7 @@ checkstyle {
 
 tasks.named<Checkstyle>("checkstyleMain") {
     dependsOn(tasks.compileJava)
-    setSource(project.fileTree("src/main/java")) // Исправление устаревшего метода
+    setSource(project.fileTree("src/main/java"))
 }
 
 dependencies {
@@ -48,13 +47,13 @@ jacoco {
 }
 
 tasks.jacocoTestReport {
-    dependsOn(tasks.test) // Убедитесь, что тесты запускаются перед генерацией отчета
+    dependsOn(tasks.test)
 
     reports {
         xml.required.set(true)
         html.required.set(true)
-        xml.outputLocation.set(file("${buildDir}/reports/jacoco/test/jacocoTestReport.xml"))
-        html.outputLocation.set(file("${buildDir}/reports/jacoco/test/html"))
+        xml.outputLocation.set(file("$buildDir/reports/jacoco/test/jacocoTestReport.xml"))
+        html.outputLocation.set(file("$buildDir/reports/jacoco/test/html"))
     }
 }
 
