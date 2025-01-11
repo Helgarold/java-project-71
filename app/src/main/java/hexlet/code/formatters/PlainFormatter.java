@@ -4,45 +4,64 @@ import hexlet.code.DiffNode;
 import java.util.List;
 import java.util.Map;
 
-public class PlainFormatter extends Formatter {  // Наследование от Formatter
+public class PlainFormatter extends Formatter {
 
     @Override
-    public String format(List<DiffNode> diffNodes) {  // Переопределение метода format
+    public String format(List<DiffNode> diffNodes) {
         StringBuilder result = new StringBuilder();
-        for (DiffNode node : diffNodes) {
+        result.append("{\n");
+        for (int i = 0; i < diffNodes.size(); i++) {
+            DiffNode node = diffNodes.get(i);
             String line = formatNode(node);
             if (line != null) {
-                result.append(line).append("\n");
+                result.append(line);
+                if (i < diffNodes.size() - 1) {
+                    result.append("\n");
+                }
             }
         }
-        return result.toString().trim();
+        result.append("\n}");
+        return result.toString();
     }
 
     private String formatNode(DiffNode node) {
         StringBuilder sb = new StringBuilder();
-        String action = node.getType();  // Извлечение типа изменения
-        String property = node.getKey();  // Извлечение ключа
+        String action = node.getType();
+        String property = node.getKey();
         Object oldValue = node.getOldValue();
         Object newValue = node.getNewValue();
 
         switch (action) {
+            case "updated":
             case "changed":
-                sb.append(String.format("Property '%s' was updated. From %s to %s", property,
-                        formatValue(oldValue),
-                        formatValue(newValue)));
+                appendUpdated(sb, property, oldValue, newValue);
                 break;
             case "removed":
-                sb.append(String.format("Property '%s' was removed", property));
+                appendRemoved(sb, property, oldValue);
                 break;
             case "added":
-                sb.append(String.format("Property '%s' was added with value: %s", property, formatValue(newValue)));
+                appendAdded(sb, property, newValue);
                 break;
-            case "unchanged":  // Этот случай можно оставить пустым, если он не нужен
-                break;
+            case "unchanged":
+                return null; // ничего не делать
             default:
                 throw new IllegalArgumentException("Unknown action: " + action);
         }
-        return sb.toString(); // Возвращение отформатированной строки
+
+        return sb.toString().trim(); // Убираем лишние пробелы и переводы строк
+    }
+
+    private void appendUpdated(StringBuilder sb, String property, Object oldValue, Object newValue) {
+        sb.append(String.format("- %s: %s\n", property, formatValue(oldValue)));  // Убираем пробел перед '-'
+        sb.append(String.format("+ %s: %s\n", property, formatValue(newValue))); // Убираем пробел перед '+'
+    }
+
+    private void appendRemoved(StringBuilder sb, String property, Object oldValue) {
+        sb.append(String.format("- %s: %s", property, formatValue(oldValue)));
+    }
+
+    private void appendAdded(StringBuilder sb, String property, Object newValue) {
+        sb.append(String.format("+ %s: %s", property, formatValue(newValue)));
     }
 
     private String formatValue(Object value) {
@@ -50,11 +69,32 @@ public class PlainFormatter extends Formatter {  // Наследование о�
             return "null";
         }
         if (value instanceof String) {
-            return "'" + value + "'";
+            return String.valueOf(value); // Без кавычек
         }
-        if (value instanceof List || value instanceof Map) {
-            return "[complex value]";
+        if (value instanceof List) {
+            return formatList((List<?>) value);
+        }
+        if (value instanceof Map) {
+            return formatMap((Map<?, ?>) value);
         }
         return String.valueOf(value);
+    }
+
+    private String formatList(List<?> list) {
+        return "[" + String.join(", ", list.stream().map(this::formatValue).toArray(String[]::new)) + "]";
+    }
+
+    private String formatMap(Map<?, ?> map) {
+        StringBuilder result = new StringBuilder("{");
+        boolean first = true;
+        for (Map.Entry<?, ?> entry : map.entrySet()) {
+            if (!first) {
+                result.append(", ");
+            }
+            result.append(entry.getKey()).append("=").append(formatValue(entry.getValue()));
+            first = false;
+        }
+        result.append("}");
+        return result.toString();
     }
 }

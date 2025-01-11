@@ -64,36 +64,6 @@ public class JsonFormatterTest {
         assertEquals(expectedJson, actualJson);
     }
 
-    /*@Test
-    public void testFormatChangedNode() throws Exception {
-        DiffNode changedNode = new DiffNode("key5", "changed", "oldValue", "newValue");
-        List<DiffNode> diffNodes = List.of(changedNode);
-
-        String expectedJson = "{\n  \"key5\" : {\n    \"oldValue\" : \"oldValue\",\n
-          \"newValue\" : \"newValue\"\n  }\n}";
-        String actualJson = jsonFormatter.format(diffNodes);
-
-        // Добавляем временный вывод
-        System.out.println("Expected JSON: " + expectedJson);
-        System.out.println("Actual JSON: " + actualJson);
-
-        assertEquals(expectedJson, actualJson);
-    }*/
-
-    /*@Test
-    public void testFormatEmptyList() throws Exception {
-        List<DiffNode> diffNodes = List.of();
-
-        String expectedJson = "{}";
-        String actualJson = jsonFormatter.format(diffNodes);
-
-        // Добавляем временный вывод
-        System.out.println("Expected JSON: " + expectedJson);
-        System.out.println("Actual JSON: " + actualJson);
-
-        assertEquals(expectedJson, actualJson);
-    }*/
-
     @Test
     public void testFormatThrowsException() {
         DiffNode invalidNode = new DiffNode("key1", "added", null, new Object());
