@@ -1,6 +1,7 @@
 package hexlet.code.formatters;
 
 import hexlet.code.DiffNode;
+
 import java.util.List;
 
 public abstract class Formatter {
@@ -10,12 +11,13 @@ public abstract class Formatter {
                 return new PlainFormatter();
             case "stylish":
                 return new StylishFormatter();
-            case "json": // Добавляем поддержку JSON формата
+            case "json":
                 return new JsonFormatter();
             default:
                 throw new IllegalArgumentException("Unknown format: " + format);
         }
     }
 
-    public abstract String format(List<DiffNode> diffNodes);
+    // Изменяем метод format, чтобы он принимал дополнительный параметр
+    public abstract String format(List<DiffNode> diffNodes, String formatType);
 }

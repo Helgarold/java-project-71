@@ -7,7 +7,12 @@ import java.util.Map;
 public class StylishFormatter extends Formatter {
 
     @Override
-    public String format(List<DiffNode> diffNodes) {
+    public String format(List<DiffNode> diffNodes, String formatType) {
+        // Проверяем, что формат типа "stylish"
+        if (!"stylish".equalsIgnoreCase(formatType)) {
+            throw new IllegalArgumentException("StylishFormatter only supports 'stylish' format type");
+        }
+
         StringBuilder result = new StringBuilder();
         result.append("{\n");
 

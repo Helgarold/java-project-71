@@ -11,7 +11,12 @@ import java.util.Map;
 public class JsonFormatter extends Formatter {
 
     @Override
-    public String format(List<DiffNode> diffNodes) {
+    public String format(List<DiffNode> diffNodes, String formatType) {
+        // Проверяем, что формат типа "json"
+        if (!"json".equalsIgnoreCase(formatType)) {
+            throw new IllegalArgumentException("JsonFormatter only supports 'json' format type");
+        }
+
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> resultMap = new LinkedHashMap<>();
 

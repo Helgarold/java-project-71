@@ -33,6 +33,11 @@ run-plain:
 	@echo "Запуск приложения с файлами ${FILEPATH1_JSON} и ${FILEPATH2_JSON} в формате plain..."
 	@${APP_DIR}/$(APP_NAME) --type json -f plain ${FILEPATH1_JSON} ${FILEPATH2_JSON}
 
+# Запуск приложения с форматом json
+run-plain-json:  # Добавленная команда для запуска с форматом JSON
+	@echo "Запуск приложения с файлами ${FILEPATH1_JSON} и ${FILEPATH2_JSON} в формате JSON..."
+	@${APP_DIR}/$(APP_NAME) --type json -f json ${FILEPATH1_JSON} ${FILEPATH2_JSON}
+
 # Запуск приложения с помощью флага -h для вывода справки
 run-h:
 	@echo "Вывод справки приложения..."

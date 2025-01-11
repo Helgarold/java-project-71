@@ -20,7 +20,7 @@ public class JsonFormatterTest {
         List<DiffNode> diffNodes = List.of(addedNode);
 
         String expectedJson = "{\n  \"key1\" : \"value1\"\n}";
-        String actualJson = jsonFormatter.format(diffNodes);
+        String actualJson = jsonFormatter.format(diffNodes, "json"); // Передаем формат
 
         assertEquals(expectedJson, actualJson);
     }
@@ -31,7 +31,7 @@ public class JsonFormatterTest {
         List<DiffNode> diffNodes = List.of(removedNode);
 
         String expectedJson = "{\n  \"key2\" : null\n}";
-        String actualJson = jsonFormatter.format(diffNodes);
+        String actualJson = jsonFormatter.format(diffNodes, "json"); // Передаем формат
 
         assertEquals(expectedJson, actualJson);
     }
@@ -46,7 +46,7 @@ public class JsonFormatterTest {
 
         ObjectMapper objectMapper = new ObjectMapper();
         Map<String, Object> expectedMap = objectMapper.readValue(expectedJson, new TypeReference<>() { });
-        Map<String, Object> actualMap = objectMapper.readValue(jsonFormatter.format(diffNodes),
+        Map<String, Object> actualMap = objectMapper.readValue(jsonFormatter.format(diffNodes, "json"),
                 new TypeReference<>() { });
 
         // Сравниваем карты, что учитывает порядок ключей
@@ -59,7 +59,7 @@ public class JsonFormatterTest {
         List<DiffNode> diffNodes = List.of(unchangedNode);
 
         String expectedJson = "{\n  \"key4\" : \"value4\"\n}";
-        String actualJson = jsonFormatter.format(diffNodes);
+        String actualJson = jsonFormatter.format(diffNodes, "json"); // Передаем формат
 
         assertEquals(expectedJson, actualJson);
     }
@@ -72,7 +72,7 @@ public class JsonFormatterTest {
         List<DiffNode> diffNodes = List.of(invalidNode);
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            jsonFormatter.format(diffNodes);
+            jsonFormatter.format(diffNodes, "json"); // Передаем формат
         });
 
         assertTrue(exception.getMessage().contains("Error while formatting to JSON"));

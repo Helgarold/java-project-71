@@ -36,12 +36,7 @@ public class Differ {
             } else if (value2 == null) {
                 diffNodes.add(new DiffNode(key, "removed", value1, null));
             } else if (!value1.equals(value2)) {
-                if (value1 instanceof List || value1 instanceof Map
-                        || value2 instanceof List || value2 instanceof Map) {
-                    diffNodes.add(new DiffNode(key, "changed", value1, value2));
-                } else {
-                    diffNodes.add(new DiffNode(key, "changed", value1, value2));
-                }
+                diffNodes.add(new DiffNode(key, "changed", value1, value2));
             } else {
                 diffNodes.add(new DiffNode(key, "unchanged", value1, value2));
             }
@@ -68,7 +63,7 @@ public class Differ {
     public static String generate(String filePath1, String filePath2, String formatName) throws IOException {
         List<DiffNode> diffNodes = generate(filePath1, filePath2);
         Formatter formatter = Formatter.getFormatter(formatName);
-        return formatter.format(diffNodes); // Теперь правильно используется метод форматирования
+        return formatter.format(diffNodes, formatName); // Теперь правильно используется метод форматирования
     }
 
     public static boolean compare(String json1, String json2) {

@@ -5,6 +5,7 @@ import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -64,8 +65,8 @@ public class App implements Runnable {
             // Получаем список различий
             List<DiffNode> diffNodes = Differ.generate(filepath1, filepath2);
 
-            // Получаем форматированный вывод
-            String output = Formatter.getFormatter(format).format(diffNodes);
+            // Получаем форматированный вывод, передавая формат как второй параметр
+            String output = Formatter.getFormatter(format).format(diffNodes, format);
             System.out.println(output);
 
         } catch (IOException e) {

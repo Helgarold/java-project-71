@@ -16,7 +16,7 @@ public class StylishFormatterTest {
         List<DiffNode> nodes = Arrays.asList(node);
 
         StylishFormatter stylishFormatter = new StylishFormatter();
-        String result = stylishFormatter.format(nodes);
+        String result = stylishFormatter.format(nodes, "stylish"); // Передаем формат
 
         String expected = "{\n"
                 +
@@ -32,7 +32,7 @@ public class StylishFormatterTest {
         List<DiffNode> nodes = Arrays.asList(node);
 
         StylishFormatter stylishFormatter = new StylishFormatter();
-        String result = stylishFormatter.format(nodes);
+        String result = stylishFormatter.format(nodes, "stylish"); // Передаем формат
 
         String expected = "{\n"
                 +
@@ -48,7 +48,7 @@ public class StylishFormatterTest {
         List<DiffNode> nodes = Arrays.asList(node);
 
         StylishFormatter stylishFormatter = new StylishFormatter();
-        String result = stylishFormatter.format(nodes);
+        String result = stylishFormatter.format(nodes, "stylish"); // Передаем формат
 
         String expected = "{\n"
                 +
@@ -68,7 +68,7 @@ public class StylishFormatterTest {
         List<DiffNode> nodes = Arrays.asList(node1, node2, node3, node4);
 
         StylishFormatter stylishFormatter = new StylishFormatter();
-        String result = stylishFormatter.format(nodes);
+        String result = stylishFormatter.format(nodes, "stylish"); // Передаем формат
 
         String expected = "{\n"
                 +

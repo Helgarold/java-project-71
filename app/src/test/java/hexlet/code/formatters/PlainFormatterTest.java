@@ -71,4 +71,4 @@ public class PlainFormatterTest {
 
         assertEquals(expected, result);
     }
-}*/
+} */
